@@ -1,11 +1,14 @@
 package selenium_tests;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import javax.xml.xpath.XPath;
 
 public class InboxPage extends PageObject{
 
@@ -21,12 +24,13 @@ public class InboxPage extends PageObject{
     @FindBy(xpath = "//div[@class='Ar Au']//div")
     private WebElement FieldBody;
 
-
+    @FindBy(xpath = "//div[@class='dC']/div")
+    private WebElement sendButton;
 
     @FindBy(xpath = "//*[@title='Sent']")
     private WebElement sentFolder;
 
-    @FindBy(partialLinkText = "Hello Appium Automation Course from")
+    @FindBy(xpath = "//*[contains(text(),'Hello Appium')]")
     private WebElement subjectOfSentEmail;
 
     public InboxPage(WebDriver driver) {
@@ -57,16 +61,23 @@ public class InboxPage extends PageObject{
         return new MailWindow(driver);
     }
 
-
+    public void sendButton() {
+        this.sendButton.click();
+    }
 
     public void sentFolder(){
-        this.sentFolder.click();
+        /*WebDriverWait wait = new WebDriverWait(driver, 20);
+        WebElement sentFolderLink = wait.until(ExpectedConditions.elementToBeClickable(sentFolder));*/
+        try {
+            this.sentFolder.click();
+        }
+        catch (StaleElementReferenceException e) {
+            sentFolder = driver.findElement(By.xpath("//*[@title='Sent']"));
+            this.sentFolder.click();
+        }
     }
 
-    public String summarySentEmail(){
-        return subjectOfSentEmail.getText();
+    public boolean summarySentEmailDisplayed(){
+        return subjectOfSentEmail.isDisplayed();
     }
-    /*public String confirmationInboxFolder(){
-        return inboxFolder.getText();
-    }*/
 }

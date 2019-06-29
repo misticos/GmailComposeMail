@@ -20,6 +20,7 @@ public class FunctionalTest {
         System.setProperty("webdriver.chrome.driver", "C:\\Users\\misticos\\chromedriver.exe");
 
         driver = new ChromeDriver();
+        driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
