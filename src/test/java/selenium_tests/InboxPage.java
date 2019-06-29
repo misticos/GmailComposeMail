@@ -1,5 +1,6 @@
 package selenium_tests;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -20,10 +21,7 @@ public class InboxPage extends PageObject{
     @FindBy(xpath = "//div[@class='Ar Au']//div")
     private WebElement FieldBody;
 
-    @FindBy(linkText = "Send")
-    //div[@class='T-I J-J5-Ji aoO v7 T-I-atl L3']")
-    //Previous xpath"//div[@class='dC']//div")
-    private WebElement sendButton;
+
 
     @FindBy(xpath = "//*[@title='Sent']")
     private WebElement sentFolder;
@@ -54,13 +52,12 @@ public class InboxPage extends PageObject{
         this.FieldSubject.sendKeys(subject);
     }
 
-    public void fillBodyOfEmail(String subject) {
+    public MailWindow fillBodyOfEmail(String subject) {
         this.FieldBody.sendKeys(subject);
+        return new MailWindow(driver);
     }
 
-    public void sendButton(){
-        this.sendButton.click();
-    }
+
 
     public void sentFolder(){
         this.sentFolder.click();
