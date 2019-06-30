@@ -17,7 +17,7 @@ public class FunctionalTest {
 
     @BeforeClass
     public static void setUp(){
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\misticos\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "");
 
         driver = new ChromeDriver();
         driver.manage().window().maximize();

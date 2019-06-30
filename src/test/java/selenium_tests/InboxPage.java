@@ -8,8 +8,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import javax.xml.xpath.XPath;
-
 public class InboxPage extends PageObject{
 
     @FindBy(xpath = "//*[@class=\"z0\"]")
@@ -30,14 +28,13 @@ public class InboxPage extends PageObject{
     @FindBy(xpath = "//*[@title='Sent']")
     private WebElement sentFolder;
 
-    @FindBy(xpath = "//*[contains(text(),'Hello Appium')]")
+    @FindBy(xpath = "//*[contains(text(),'Hello')]")
     private WebElement subjectOfSentEmail;
 
     public InboxPage(WebDriver driver) {
         super(driver);
     }
 
-    //User to troubleshoot
     public boolean isInitialized(){
         return compose.isDisplayed();
     }
@@ -56,9 +53,8 @@ public class InboxPage extends PageObject{
         this.FieldSubject.sendKeys(subject);
     }
 
-    public MailWindow fillBodyOfEmail(String subject) {
-        this.FieldBody.sendKeys(subject);
-        return new MailWindow(driver);
+    public void fillBodyOfEmail(String body) {
+        this.FieldBody.sendKeys(body);
     }
 
     public void sendButton() {
@@ -66,8 +62,6 @@ public class InboxPage extends PageObject{
     }
 
     public void sentFolder(){
-        /*WebDriverWait wait = new WebDriverWait(driver, 20);
-        WebElement sentFolderLink = wait.until(ExpectedConditions.elementToBeClickable(sentFolder));*/
         try {
             this.sentFolder.click();
         }
@@ -77,7 +71,7 @@ public class InboxPage extends PageObject{
         }
     }
 
-    public boolean summarySentEmailDisplayed(){
-        return subjectOfSentEmail.isDisplayed();
+    public boolean summaryOfSentEmail(){
+        return subjectOfSentEmail.isEnabled();
     }
 }
